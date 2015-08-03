@@ -68,7 +68,7 @@ func (b *BlockSimple) GetModel(r *Render) Model {
 	if v, ok := b.models[r]; ok {
 		return v
 	}
-	b.models[r] = NewCubeModel([6]Texture{
+	b.models[r] = NewFullCubeModel([6]Texture{
 		r.textures[b.textures[0]],
 		r.textures[b.textures[1]],
 		r.textures[b.textures[2]],

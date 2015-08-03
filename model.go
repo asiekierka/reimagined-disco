@@ -93,68 +93,72 @@ func (m *Model) Render() {
 	}
 }
 
-func NewCubeModel(ta [6]Texture) Model {
+func NewFullCubeModel(ta [6]Texture) Model {
+	return NewCubeModel(ta, Vec3{0, 0, 0}, Vec3{1, 1, 1})
+}
+
+func NewCubeModel(ta [6]Texture, min Vec3, max Vec3) Model {
 	m := Model{}
 	q := Quad{}
-	c := Vec3{1, 1, 1}
+	c := Vec3{max[0], max[1], max[2]}
 
 	t := ta[5]
 	q.normal = Vec3{0, 0, 1}
 	q.v = [4]Vertex{
-		Vertex{coord: Vec3{0, 1, 1}, texcoord: Vec2{t.minU, t.minV}, color: c},
-		Vertex{coord: Vec3{1, 1, 1}, texcoord: Vec2{t.maxU, t.minV}, color: c},
-		Vertex{coord: Vec3{1, 0, 1}, texcoord: Vec2{t.maxU, t.maxV}, color: c},
-		Vertex{coord: Vec3{0, 0, 1}, texcoord: Vec2{t.minU, t.maxV}, color: c},
+		Vertex{coord: Vec3{min[0], max[1], max[2]}, texcoord: Vec2{t.minU, t.minV}, color: c},
+		Vertex{coord: Vec3{max[0], max[1], max[2]}, texcoord: Vec2{t.maxU, t.minV}, color: c},
+		Vertex{coord: Vec3{max[0], min[1], max[2]}, texcoord: Vec2{t.maxU, t.maxV}, color: c},
+		Vertex{coord: Vec3{min[0], min[1], max[2]}, texcoord: Vec2{t.minU, t.maxV}, color: c},
 	}
 	m.AddQuad(q)
 
 	t = ta[4]
 	q.normal = Vec3{0, 0, -1}
 	q.v = [4]Vertex{
-		Vertex{coord: Vec3{0, 1, 0}, texcoord: Vec2{t.minU, t.minV}, color: c},
-		Vertex{coord: Vec3{1, 1, 0}, texcoord: Vec2{t.maxU, t.minV}, color: c},
-		Vertex{coord: Vec3{1, 0, 0}, texcoord: Vec2{t.maxU, t.maxV}, color: c},
-		Vertex{coord: Vec3{0, 0, 0}, texcoord: Vec2{t.minU, t.maxV}, color: c},
+		Vertex{coord: Vec3{min[0], max[1], min[2]}, texcoord: Vec2{t.minU, t.minV}, color: c},
+		Vertex{coord: Vec3{max[0], max[1], min[2]}, texcoord: Vec2{t.maxU, t.minV}, color: c},
+		Vertex{coord: Vec3{max[0], min[1], min[2]}, texcoord: Vec2{t.maxU, t.maxV}, color: c},
+		Vertex{coord: Vec3{min[0], min[1], min[2]}, texcoord: Vec2{t.minU, t.maxV}, color: c},
 	}
 	m.AddQuad(q)
 
 	t = ta[1]
 	q.normal = Vec3{0, 0, 1}
 	q.v = [4]Vertex{
-		Vertex{coord: Vec3{0, 1, 0}, texcoord: Vec2{t.minU, t.minV}, color: c},
-		Vertex{coord: Vec3{1, 1, 0}, texcoord: Vec2{t.maxU, t.minV}, color: c},
-		Vertex{coord: Vec3{1, 1, 1}, texcoord: Vec2{t.maxU, t.maxV}, color: c},
-		Vertex{coord: Vec3{0, 1, 1}, texcoord: Vec2{t.minU, t.maxV}, color: c},
+		Vertex{coord: Vec3{min[0], max[1], min[2]}, texcoord: Vec2{t.minU, t.minV}, color: c},
+		Vertex{coord: Vec3{max[0], max[1], min[2]}, texcoord: Vec2{t.maxU, t.minV}, color: c},
+		Vertex{coord: Vec3{max[0], max[1], max[2]}, texcoord: Vec2{t.maxU, t.maxV}, color: c},
+		Vertex{coord: Vec3{min[0], max[1], max[2]}, texcoord: Vec2{t.minU, t.maxV}, color: c},
 	}
 	m.AddQuad(q)
 
 	t = ta[0]
 	q.normal = Vec3{0, 0, -1}
 	q.v = [4]Vertex{
-		Vertex{coord: Vec3{0, 0, 0}, texcoord: Vec2{t.minU, t.minV}, color: c},
-		Vertex{coord: Vec3{1, 0, 0}, texcoord: Vec2{t.maxU, t.minV}, color: c},
-		Vertex{coord: Vec3{1, 0, 1}, texcoord: Vec2{t.maxU, t.maxV}, color: c},
-		Vertex{coord: Vec3{0, 0, 1}, texcoord: Vec2{t.minU, t.maxV}, color: c},
+		Vertex{coord: Vec3{min[0], min[1], min[2]}, texcoord: Vec2{t.minU, t.minV}, color: c},
+		Vertex{coord: Vec3{max[0], min[1], min[2]}, texcoord: Vec2{t.maxU, t.minV}, color: c},
+		Vertex{coord: Vec3{max[0], min[1], max[2]}, texcoord: Vec2{t.maxU, t.maxV}, color: c},
+		Vertex{coord: Vec3{min[0], min[1], max[2]}, texcoord: Vec2{t.minU, t.maxV}, color: c},
 	}
 	m.AddQuad(q)
 
 	t = ta[3]
 	q.normal = Vec3{1, 0, 0}
 	q.v = [4]Vertex{
-		Vertex{coord: Vec3{1, 1, 0}, texcoord: Vec2{t.minU, t.minV}, color: c},
-		Vertex{coord: Vec3{1, 1, 1}, texcoord: Vec2{t.maxU, t.minV}, color: c},
-		Vertex{coord: Vec3{1, 0, 1}, texcoord: Vec2{t.maxU, t.maxV}, color: c},
-		Vertex{coord: Vec3{1, 0, 0}, texcoord: Vec2{t.minU, t.maxV}, color: c},
+		Vertex{coord: Vec3{max[0], max[1], min[2]}, texcoord: Vec2{t.minU, t.minV}, color: c},
+		Vertex{coord: Vec3{max[0], max[1], max[2]}, texcoord: Vec2{t.maxU, t.minV}, color: c},
+		Vertex{coord: Vec3{max[0], min[1], max[2]}, texcoord: Vec2{t.maxU, t.maxV}, color: c},
+		Vertex{coord: Vec3{max[0], min[1], min[2]}, texcoord: Vec2{t.minU, t.maxV}, color: c},
 	}
 	m.AddQuad(q)
 
 	t = ta[2]
 	q.normal = Vec3{-1, 0, 0}
 	q.v = [4]Vertex{
-		Vertex{coord: Vec3{0, 1, 0}, texcoord: Vec2{t.minU, t.minV}, color: c},
-		Vertex{coord: Vec3{0, 1, 1}, texcoord: Vec2{t.maxU, t.minV}, color: c},
-		Vertex{coord: Vec3{0, 0, 1}, texcoord: Vec2{t.maxU, t.maxV}, color: c},
-		Vertex{coord: Vec3{0, 0, 0}, texcoord: Vec2{t.minU, t.maxV}, color: c},
+		Vertex{coord: Vec3{min[0], max[1], min[2]}, texcoord: Vec2{t.minU, t.minV}, color: c},
+		Vertex{coord: Vec3{min[0], max[1], max[2]}, texcoord: Vec2{t.maxU, t.minV}, color: c},
+		Vertex{coord: Vec3{min[0], min[1], max[2]}, texcoord: Vec2{t.maxU, t.maxV}, color: c},
+		Vertex{coord: Vec3{min[0], min[1], min[2]}, texcoord: Vec2{t.minU, t.maxV}, color: c},
 	}
 	m.AddQuad(q)
 

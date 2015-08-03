@@ -15,7 +15,7 @@ import (
 )
 
 const Z_OFFSET = 1 / 64
-const VIEW_DISTANCE = 5
+const VIEW_DISTANCE = 10
 const EYE_HEIGHT = 1.7
 
 type Render struct {
@@ -64,6 +64,7 @@ func (v *VertexBuffer) AppendFancy(q *Quad, coordOffset Vec3, texCoordOffset Vec
 
 func (v *VertexBuffer) Deinit() {
 	gl.DeleteBuffers(1, &v.vbo)
+	v.vboInit = false
 	v.data = nil
 }
 
@@ -72,21 +73,25 @@ func (v *VertexBuffer) Reset() {
 	v.count = 0
 }
 
-func (v *VertexBuffer) Draw() {
-	if v.count > 0 {
-		if !v.vboInit {
-			gl.GenBuffers(1, &v.vbo)
-			v.vboInit = true
-		}
+func (v *VertexBuffer) Refresh() bool {
+	if !v.vboInit {
+		gl.GenBuffers(1, &v.vbo)
+		v.vboInit = true
+	}
+	if v.count > 0 && v.refreshReady {
 		gl.BindBuffer(gl.ARRAY_BUFFER, v.vbo)
+ 		gl.BufferData(gl.ARRAY_BUFFER, 4*len(v.data), gl.Ptr(v.data), gl.STATIC_DRAW)
+		v.vboCount = v.count
+		v.data = nil
+		v.refreshReady = false
+		return true
+	}
+	return false
+}
 
-		if (v.refreshReady) {
- 			gl.BufferData(gl.ARRAY_BUFFER, 4*len(v.data), gl.Ptr(v.data), gl.STATIC_DRAW)
-			v.vboCount = v.count
-			v.data = nil
-			v.refreshReady = false
-		}
-
+func (v *VertexBuffer) Draw() {
+	if v.vboCount > 0 && v.vboInit {
+		gl.BindBuffer(gl.ARRAY_BUFFER, v.vbo)
 		gl.VertexPointer(3, gl.FLOAT, 44, gl.PtrOffset(0))
 		gl.TexCoordPointer(2, gl.FLOAT, 44, gl.PtrOffset(9*4))
 		gl.NormalPointer(gl.FLOAT, 44, gl.PtrOffset(3*4))
@@ -268,6 +273,8 @@ func (r *Render) drawBlockVBOs(player *Player, w World) {
 	gl.EnableClientState(gl.NORMAL_ARRAY)
 	gl.EnableClientState(gl.COLOR_ARRAY)
 
+	maxRefresh := 8
+
 	// add necessary VBOs and render
 	for y := -VIEW_DISTANCE; y <= VIEW_DISTANCE; y++ {
 		for z := -VIEW_DISTANCE; z <= VIEW_DISTANCE; z++ {
@@ -282,6 +289,9 @@ func (r *Render) drawBlockVBOs(player *Player, w World) {
 					r.buffers[pos] = &v
 					r.toRefresh <- VertexRefreshRequest{pos: pos, vbo: r.buffers[pos]}
 				} else {
+					if maxRefresh > 0 && r.buffers[pos].Refresh() {
+						maxRefresh--
+					}
 					r.buffers[pos].Draw()
 				}
 			}

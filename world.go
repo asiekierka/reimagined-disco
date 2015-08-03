@@ -6,9 +6,9 @@ import (
 )
 
 const (
-	MAP_W = 256
+	MAP_W = 512
 	MAP_H = 128
-	MAP_D = 256
+	MAP_D = 512
 )
 
 type WorldFlat struct {
