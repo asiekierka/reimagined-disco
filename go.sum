@@ -1,0 +1,8 @@
+github.com/barnex/fmath v0.0.0-20150108074215-ec9671f295c2 h1:FOAZHSIFEhocAOfB7LQcZmCEAra7hneHMBPL8Nq/eDk=
+github.com/barnex/fmath v0.0.0-20150108074215-ec9671f295c2/go.mod h1:G7XW+2O6Hk/x6OP8AuwZjI8ZTyXvKDTTKaRK92gapfk=
+github.com/go-gl/gl v0.0.0-20211210172815-726fda9656d6 h1:zDw5v7qm4yH7N8C8uWd+8Ii9rROdgWxQuGoJ9WDXxfk=
+github.com/go-gl/gl v0.0.0-20211210172815-726fda9656d6/go.mod h1:9YTyiznxEY1fVinfM7RvRcjRHbw2xLBJ3AAGIT0I4Nw=
+github.com/go-gl/glfw v0.0.0-20220806181222-55e207c401ad h1:UTn6HRbV2fr8Rg1VVdST6kjjbjHrohfYzvqsXEpqBy8=
+github.com/go-gl/glfw v0.0.0-20220806181222-55e207c401ad/go.mod h1:wyvWpaEu9B/VQiV1jsPs7Mha9I7yto/HqIBw197ZAzk=
+github.com/larspensjo/Go-simplex-noise v0.0.0-20121005164837-bfdcb9fc4b93 h1:Cez//BoEZ8ZYxTZq6ZrnhZGZxjGywQ87JQX1HsxXNzQ=
+github.com/larspensjo/Go-simplex-noise v0.0.0-20121005164837-bfdcb9fc4b93/go.mod h1:Q6YiXYMVV0eiIQ99VlYANrQLZqN2YIITWlZ82Grnw+Y=
